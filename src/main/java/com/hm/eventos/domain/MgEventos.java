@@ -24,6 +24,7 @@ public class MgEventos {
     private double pLng;
     private String pTipo;
 
+
     @Id
     @Column(name = "id")
     public int getId() {
@@ -34,7 +35,7 @@ public class MgEventos {
         this.id = id;
     }
 
-    @Basic
+
     @Column(name = "user_id")
     public int getUserId() {
         return userId;
@@ -44,7 +45,6 @@ public class MgEventos {
         this.userId = userId;
     }
 
-    @Basic
     @Column(name = "categoria_id")
     public int getCategoriaId() {
         return categoriaId;
@@ -54,7 +54,6 @@ public class MgEventos {
         this.categoriaId = categoriaId;
     }
 
-    @Basic
     @Column(name = "nombre")
     public String getNombre() {
         return nombre;
@@ -64,7 +63,6 @@ public class MgEventos {
         this.nombre = nombre;
     }
 
-    @Basic
     @Column(name = "descripcion")
     public String getDescripcion() {
         return descripcion;
@@ -74,7 +72,6 @@ public class MgEventos {
         this.descripcion = descripcion;
     }
 
-    @Basic
     @Column(name = "fecha_registro")
     public Timestamp getFechaRegistro() {
         return fechaRegistro;
@@ -84,7 +81,6 @@ public class MgEventos {
         this.fechaRegistro = fechaRegistro;
     }
 
-    @Basic
     @Column(name = "fecha_inicio")
     public Timestamp getFechaInicio() {
         return fechaInicio;
@@ -94,7 +90,6 @@ public class MgEventos {
         this.fechaInicio = fechaInicio;
     }
 
-    @Basic
     @Column(name = "fecha_fin")
     public Timestamp getFechaFin() {
         return fechaFin;
@@ -104,7 +99,6 @@ public class MgEventos {
         this.fechaFin = fechaFin;
     }
 
-    @Basic
     @Column(name = "visibilidad")
     public String getVisibilidad() {
         return visibilidad;
@@ -114,7 +108,6 @@ public class MgEventos {
         this.visibilidad = visibilidad;
     }
 
-    @Basic
     @Column(name = "p_nombre")
     public String getpNombre() {
         return pNombre;
@@ -124,7 +117,6 @@ public class MgEventos {
         this.pNombre = pNombre;
     }
 
-    @Basic
     @Column(name = "p_direccion")
     public String getpDireccion() {
         return pDireccion;
@@ -134,7 +126,6 @@ public class MgEventos {
         this.pDireccion = pDireccion;
     }
 
-    @Basic
     @Column(name = "p_lat")
     public double getpLat() {
         return pLat;
@@ -144,7 +135,7 @@ public class MgEventos {
         this.pLat = pLat;
     }
 
-    @Basic
+
     @Column(name = "p_lng")
     public double getpLng() {
         return pLng;
@@ -154,7 +145,6 @@ public class MgEventos {
         this.pLng = pLng;
     }
 
-    @Basic
     @Column(name = "p_tipo")
     public String getpTipo() {
         return pTipo;
