@@ -4,9 +4,18 @@
     "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
   <session-factory>
-    <property name="connection.url"/>
-    <property name="connection.driver_class"/>
-    <!-- <property name="connection.username"/> -->
+    <property name="connection.url">jdbc:mysql://192.95.15.158/service_app</property>
+    <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+      <mapping class="com.hm.eventos.domain.MgApi"/>
+      <mapping class="com.hm.eventos.domain.MgEventos"/>
+      <mapping class="com.hm.eventos.domain.MgEventosCategoria"/>
+      <mapping class="com.hm.eventos.domain.MgEventosFotos"/>
+      <mapping class="com.hm.eventos.domain.MgListaInvitados"/>
+      <mapping class="com.hm.eventos.domain.MgPosicion"/>
+      <mapping class="com.hm.eventos.domain.MgUsuarios"/>
+      <mapping class="com.hm.eventos.domain.RegistroActividad"/>
+      <mapping class="com.hm.eventos.domain.RegistroIngreso"/>
+      <!-- <property name="connection.username"/> -->
     <!-- <property name="connection.password"/> -->
 
     <!-- DB schema will be updated if needed -->
