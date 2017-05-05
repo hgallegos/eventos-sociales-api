@@ -1,16 +1,17 @@
 package com.hm.eventos.domain;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.sql.Timestamp;
 
 /**
- * Created by hans6 on 27-04-2017.
+ * Created by hans6 on 05-05-2017.
  */
 @Entity
-@Table(name = "mg_posicion", schema = "service_app", catalog = "")
-public class MgPosicion {
+public class Posicion {
     private int id;
-    private int userId;
     private Timestamp fecha;
     private String nombre;
     private String direccion;
@@ -20,7 +21,7 @@ public class MgPosicion {
     private int defecto;
 
     @Id
-    @Column(name = "id")
+    @Column(name = "Id")
     public int getId() {
         return id;
     }
@@ -30,17 +31,7 @@ public class MgPosicion {
     }
 
     @Basic
-    @Column(name = "user_id")
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    @Basic
-    @Column(name = "fecha")
+    @Column(name = "Fecha")
     public Timestamp getFecha() {
         return fecha;
     }
@@ -50,7 +41,7 @@ public class MgPosicion {
     }
 
     @Basic
-    @Column(name = "nombre")
+    @Column(name = "Nombre")
     public String getNombre() {
         return nombre;
     }
@@ -60,7 +51,7 @@ public class MgPosicion {
     }
 
     @Basic
-    @Column(name = "direccion")
+    @Column(name = "Direccion")
     public String getDireccion() {
         return direccion;
     }
@@ -70,7 +61,7 @@ public class MgPosicion {
     }
 
     @Basic
-    @Column(name = "lat")
+    @Column(name = "Lat")
     public double getLat() {
         return lat;
     }
@@ -80,7 +71,7 @@ public class MgPosicion {
     }
 
     @Basic
-    @Column(name = "lng")
+    @Column(name = "Lng")
     public double getLng() {
         return lng;
     }
@@ -90,7 +81,7 @@ public class MgPosicion {
     }
 
     @Basic
-    @Column(name = "tipo")
+    @Column(name = "Tipo")
     public String getTipo() {
         return tipo;
     }
@@ -100,7 +91,7 @@ public class MgPosicion {
     }
 
     @Basic
-    @Column(name = "defecto")
+    @Column(name = "Defecto")
     public int getDefecto() {
         return defecto;
     }
@@ -114,17 +105,16 @@ public class MgPosicion {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        MgPosicion that = (MgPosicion) o;
+        Posicion posicion = (Posicion) o;
 
-        if (id != that.id) return false;
-        if (userId != that.userId) return false;
-        if (Double.compare(that.lat, lat) != 0) return false;
-        if (Double.compare(that.lng, lng) != 0) return false;
-        if (defecto != that.defecto) return false;
-        if (fecha != null ? !fecha.equals(that.fecha) : that.fecha != null) return false;
-        if (nombre != null ? !nombre.equals(that.nombre) : that.nombre != null) return false;
-        if (direccion != null ? !direccion.equals(that.direccion) : that.direccion != null) return false;
-        if (tipo != null ? !tipo.equals(that.tipo) : that.tipo != null) return false;
+        if (id != posicion.id) return false;
+        if (Double.compare(posicion.lat, lat) != 0) return false;
+        if (Double.compare(posicion.lng, lng) != 0) return false;
+        if (defecto != posicion.defecto) return false;
+        if (fecha != null ? !fecha.equals(posicion.fecha) : posicion.fecha != null) return false;
+        if (nombre != null ? !nombre.equals(posicion.nombre) : posicion.nombre != null) return false;
+        if (direccion != null ? !direccion.equals(posicion.direccion) : posicion.direccion != null) return false;
+        if (tipo != null ? !tipo.equals(posicion.tipo) : posicion.tipo != null) return false;
 
         return true;
     }
@@ -134,7 +124,6 @@ public class MgPosicion {
         int result;
         long temp;
         result = id;
-        result = 31 * result + userId;
         result = 31 * result + (fecha != null ? fecha.hashCode() : 0);
         result = 31 * result + (nombre != null ? nombre.hashCode() : 0);
         result = 31 * result + (direccion != null ? direccion.hashCode() : 0);

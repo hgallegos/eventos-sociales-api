@@ -1,21 +1,21 @@
 package com.hm.eventos.domain;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 /**
- * Created by hans6 on 27-04-2017.
+ * Created by hans6 on 05-05-2017.
  */
 @Entity
-@Table(name = "mg_api", schema = "service_app", catalog = "")
-public class MgApi {
+public class Api {
     private int id;
-    private int userId;
     private String usuario;
     private String contrasena;
     private String estado;
+    private Collection<Registro> registros;
 
     @Id
-    @Column(name = "id")
+    @Column(name = "Id")
     public int getId() {
         return id;
     }
@@ -25,17 +25,7 @@ public class MgApi {
     }
 
     @Basic
-    @Column(name = "user_id")
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    @Basic
-    @Column(name = "usuario")
+    @Column(name = "Usuario")
     public String getUsuario() {
         return usuario;
     }
@@ -45,7 +35,7 @@ public class MgApi {
     }
 
     @Basic
-    @Column(name = "contrasena")
+    @Column(name = "Contrasena")
     public String getContrasena() {
         return contrasena;
     }
@@ -55,7 +45,7 @@ public class MgApi {
     }
 
     @Basic
-    @Column(name = "estado")
+    @Column(name = "Estado")
     public String getEstado() {
         return estado;
     }
@@ -69,13 +59,12 @@ public class MgApi {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        MgApi mgApi = (MgApi) o;
+        Api api = (Api) o;
 
-        if (id != mgApi.id) return false;
-        if (userId != mgApi.userId) return false;
-        if (usuario != null ? !usuario.equals(mgApi.usuario) : mgApi.usuario != null) return false;
-        if (contrasena != null ? !contrasena.equals(mgApi.contrasena) : mgApi.contrasena != null) return false;
-        if (estado != null ? !estado.equals(mgApi.estado) : mgApi.estado != null) return false;
+        if (id != api.id) return false;
+        if (usuario != null ? !usuario.equals(api.usuario) : api.usuario != null) return false;
+        if (contrasena != null ? !contrasena.equals(api.contrasena) : api.contrasena != null) return false;
+        if (estado != null ? !estado.equals(api.estado) : api.estado != null) return false;
 
         return true;
     }
@@ -83,10 +72,18 @@ public class MgApi {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + userId;
         result = 31 * result + (usuario != null ? usuario.hashCode() : 0);
         result = 31 * result + (contrasena != null ? contrasena.hashCode() : 0);
         result = 31 * result + (estado != null ? estado.hashCode() : 0);
         return result;
+    }
+
+    @OneToMany(mappedBy = "api")
+    public Collection<Registro> getRegistros() {
+        return registros;
+    }
+
+    public void setRegistros(Collection<Registro> registros) {
+        this.registros = registros;
     }
 }

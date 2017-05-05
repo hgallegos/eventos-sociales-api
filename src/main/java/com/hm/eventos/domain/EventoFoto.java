@@ -3,19 +3,19 @@ package com.hm.eventos.domain;
 import javax.persistence.*;
 
 /**
- * Created by hans6 on 27-04-2017.
+ * Created by hans6 on 05-05-2017.
  */
 @Entity
-@Table(name = "mg_eventos_fotos", schema = "service_app", catalog = "")
-public class MgEventosFotos {
+@Table(name = "evento_foto", schema = "service_app", catalog = "")
+public class EventoFoto {
     private int id;
-    private int eventoId;
     private String titulo;
     private String descripcion;
     private String url;
+    private Evento evento;
 
     @Id
-    @Column(name = "id")
+    @Column(name = "Id")
     public int getId() {
         return id;
     }
@@ -25,17 +25,7 @@ public class MgEventosFotos {
     }
 
     @Basic
-    @Column(name = "evento_id")
-    public int getEventoId() {
-        return eventoId;
-    }
-
-    public void setEventoId(int eventoId) {
-        this.eventoId = eventoId;
-    }
-
-    @Basic
-    @Column(name = "titulo")
+    @Column(name = "Titulo")
     public String getTitulo() {
         return titulo;
     }
@@ -45,7 +35,7 @@ public class MgEventosFotos {
     }
 
     @Basic
-    @Column(name = "descripcion")
+    @Column(name = "Descripcion")
     public String getDescripcion() {
         return descripcion;
     }
@@ -55,7 +45,7 @@ public class MgEventosFotos {
     }
 
     @Basic
-    @Column(name = "url")
+    @Column(name = "Url")
     public String getUrl() {
         return url;
     }
@@ -69,10 +59,9 @@ public class MgEventosFotos {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        MgEventosFotos that = (MgEventosFotos) o;
+        EventoFoto that = (EventoFoto) o;
 
         if (id != that.id) return false;
-        if (eventoId != that.eventoId) return false;
         if (titulo != null ? !titulo.equals(that.titulo) : that.titulo != null) return false;
         if (descripcion != null ? !descripcion.equals(that.descripcion) : that.descripcion != null) return false;
         if (url != null ? !url.equals(that.url) : that.url != null) return false;
@@ -83,10 +72,19 @@ public class MgEventosFotos {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + eventoId;
         result = 31 * result + (titulo != null ? titulo.hashCode() : 0);
         result = 31 * result + (descripcion != null ? descripcion.hashCode() : 0);
         result = 31 * result + (url != null ? url.hashCode() : 0);
         return result;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "Evento_Id", referencedColumnName = "Id", nullable = false)
+    public Evento getEvento() {
+        return evento;
+    }
+
+    public void setEvento(Evento evento) {
+        this.evento = evento;
     }
 }

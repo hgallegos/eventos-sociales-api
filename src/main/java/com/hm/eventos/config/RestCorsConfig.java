@@ -3,6 +3,9 @@ package com.hm.eventos.config;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
+import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurerAdapter;
+import org.springframework.stereotype.Component;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -10,20 +13,18 @@ import org.springframework.web.filter.CorsFilter;
 /**
  * Created by hans6 on 27-04-2017.
  */
-@Configuration
-public class RestCorsConfig {
+@Component
+public class RestCorsConfig extends RepositoryRestConfigurerAdapter{
 
-    @Bean
-    public FilterRegistrationBean corsFilter() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
-        config.addAllowedOrigin("**");
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("*");
-        source.registerCorsConfiguration("/**", config);
-        FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
-        bean.setOrder(0);
-        return bean;
+    @Override
+    public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
+
+        config.getCorsRegistry().addMapping("/**")
+                .allowedOrigins("*")
+                .allowedMethods("PUT", "DELETE", "OPTIONS", "GET", "POST")
+                .allowedHeaders("*")
+                .allowCredentials(true)
+                .maxAge(3600);
     }
+
 }

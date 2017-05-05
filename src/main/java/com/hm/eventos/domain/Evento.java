@@ -2,16 +2,15 @@ package com.hm.eventos.domain;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Collection;
+import java.util.Set;
 
 /**
- * Created by hans6 on 27-04-2017.
+ * Created by hans6 on 05-05-2017.
  */
 @Entity
-@Table(name = "mg_eventos", schema = "service_app", catalog = "")
-public class MgEventos {
+public class Evento {
     private int id;
-    private int userId;
-    private int categoriaId;
     private String nombre;
     private String descripcion;
     private Timestamp fechaRegistro;
@@ -23,10 +22,13 @@ public class MgEventos {
     private double pLat;
     private double pLng;
     private String pTipo;
-
+    private Set<EventoFoto> eventoFotosById;
+    private Set<ListaInvitado> listaInvitadosById;
+    private Collection<EventoFoto> fotos;
+    private Collection<ListaInvitado> invitados;
 
     @Id
-    @Column(name = "id")
+    @Column(name = "Id")
     public int getId() {
         return id;
     }
@@ -35,26 +37,8 @@ public class MgEventos {
         this.id = id;
     }
 
-
-    @Column(name = "user_id")
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    @Column(name = "categoria_id")
-    public int getCategoriaId() {
-        return categoriaId;
-    }
-
-    public void setCategoriaId(int categoriaId) {
-        this.categoriaId = categoriaId;
-    }
-
-    @Column(name = "nombre")
+    @Basic
+    @Column(name = "Nombre")
     public String getNombre() {
         return nombre;
     }
@@ -63,7 +47,8 @@ public class MgEventos {
         this.nombre = nombre;
     }
 
-    @Column(name = "descripcion")
+    @Basic
+    @Column(name = "Descripcion")
     public String getDescripcion() {
         return descripcion;
     }
@@ -72,7 +57,8 @@ public class MgEventos {
         this.descripcion = descripcion;
     }
 
-    @Column(name = "fecha_registro")
+    @Basic
+    @Column(name = "Fecha_Registro")
     public Timestamp getFechaRegistro() {
         return fechaRegistro;
     }
@@ -81,7 +67,8 @@ public class MgEventos {
         this.fechaRegistro = fechaRegistro;
     }
 
-    @Column(name = "fecha_inicio")
+    @Basic
+    @Column(name = "Fecha_Inicio")
     public Timestamp getFechaInicio() {
         return fechaInicio;
     }
@@ -90,7 +77,8 @@ public class MgEventos {
         this.fechaInicio = fechaInicio;
     }
 
-    @Column(name = "fecha_fin")
+    @Basic
+    @Column(name = "Fecha_Fin")
     public Timestamp getFechaFin() {
         return fechaFin;
     }
@@ -99,7 +87,8 @@ public class MgEventos {
         this.fechaFin = fechaFin;
     }
 
-    @Column(name = "visibilidad")
+    @Basic
+    @Column(name = "Visibilidad")
     public String getVisibilidad() {
         return visibilidad;
     }
@@ -108,7 +97,8 @@ public class MgEventos {
         this.visibilidad = visibilidad;
     }
 
-    @Column(name = "p_nombre")
+    @Basic
+    @Column(name = "P_Nombre")
     public String getpNombre() {
         return pNombre;
     }
@@ -117,7 +107,8 @@ public class MgEventos {
         this.pNombre = pNombre;
     }
 
-    @Column(name = "p_direccion")
+    @Basic
+    @Column(name = "P_Direccion")
     public String getpDireccion() {
         return pDireccion;
     }
@@ -126,7 +117,8 @@ public class MgEventos {
         this.pDireccion = pDireccion;
     }
 
-    @Column(name = "p_lat")
+    @Basic
+    @Column(name = "P_Lat")
     public double getpLat() {
         return pLat;
     }
@@ -135,8 +127,8 @@ public class MgEventos {
         this.pLat = pLat;
     }
 
-
-    @Column(name = "p_lng")
+    @Basic
+    @Column(name = "P_Lng")
     public double getpLng() {
         return pLng;
     }
@@ -145,7 +137,8 @@ public class MgEventos {
         this.pLng = pLng;
     }
 
-    @Column(name = "p_tipo")
+    @Basic
+    @Column(name = "P_Tipo")
     public String getpTipo() {
         return pTipo;
     }
@@ -159,26 +152,21 @@ public class MgEventos {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        MgEventos mgEventos = (MgEventos) o;
+        Evento evento = (Evento) o;
 
-        if (id != mgEventos.id) return false;
-        if (userId != mgEventos.userId) return false;
-        if (categoriaId != mgEventos.categoriaId) return false;
-        if (Double.compare(mgEventos.pLat, pLat) != 0) return false;
-        if (Double.compare(mgEventos.pLng, pLng) != 0) return false;
-        if (nombre != null ? !nombre.equals(mgEventos.nombre) : mgEventos.nombre != null) return false;
-        if (descripcion != null ? !descripcion.equals(mgEventos.descripcion) : mgEventos.descripcion != null)
+        if (id != evento.id) return false;
+        if (Double.compare(evento.pLat, pLat) != 0) return false;
+        if (Double.compare(evento.pLng, pLng) != 0) return false;
+        if (nombre != null ? !nombre.equals(evento.nombre) : evento.nombre != null) return false;
+        if (descripcion != null ? !descripcion.equals(evento.descripcion) : evento.descripcion != null) return false;
+        if (fechaRegistro != null ? !fechaRegistro.equals(evento.fechaRegistro) : evento.fechaRegistro != null)
             return false;
-        if (fechaRegistro != null ? !fechaRegistro.equals(mgEventos.fechaRegistro) : mgEventos.fechaRegistro != null)
-            return false;
-        if (fechaInicio != null ? !fechaInicio.equals(mgEventos.fechaInicio) : mgEventos.fechaInicio != null)
-            return false;
-        if (fechaFin != null ? !fechaFin.equals(mgEventos.fechaFin) : mgEventos.fechaFin != null) return false;
-        if (visibilidad != null ? !visibilidad.equals(mgEventos.visibilidad) : mgEventos.visibilidad != null)
-            return false;
-        if (pNombre != null ? !pNombre.equals(mgEventos.pNombre) : mgEventos.pNombre != null) return false;
-        if (pDireccion != null ? !pDireccion.equals(mgEventos.pDireccion) : mgEventos.pDireccion != null) return false;
-        if (pTipo != null ? !pTipo.equals(mgEventos.pTipo) : mgEventos.pTipo != null) return false;
+        if (fechaInicio != null ? !fechaInicio.equals(evento.fechaInicio) : evento.fechaInicio != null) return false;
+        if (fechaFin != null ? !fechaFin.equals(evento.fechaFin) : evento.fechaFin != null) return false;
+        if (visibilidad != null ? !visibilidad.equals(evento.visibilidad) : evento.visibilidad != null) return false;
+        if (pNombre != null ? !pNombre.equals(evento.pNombre) : evento.pNombre != null) return false;
+        if (pDireccion != null ? !pDireccion.equals(evento.pDireccion) : evento.pDireccion != null) return false;
+        if (pTipo != null ? !pTipo.equals(evento.pTipo) : evento.pTipo != null) return false;
 
         return true;
     }
@@ -188,8 +176,6 @@ public class MgEventos {
         int result;
         long temp;
         result = id;
-        result = 31 * result + userId;
-        result = 31 * result + categoriaId;
         result = 31 * result + (nombre != null ? nombre.hashCode() : 0);
         result = 31 * result + (descripcion != null ? descripcion.hashCode() : 0);
         result = 31 * result + (fechaRegistro != null ? fechaRegistro.hashCode() : 0);
@@ -204,5 +190,23 @@ public class MgEventos {
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (pTipo != null ? pTipo.hashCode() : 0);
         return result;
+    }
+
+    @OneToMany(mappedBy = "evento")
+    public Collection<EventoFoto> getFotos() {
+        return fotos;
+    }
+
+    public void setFotos(Collection<EventoFoto> fotos) {
+        this.fotos = fotos;
+    }
+
+    @OneToMany(mappedBy = "evento")
+    public Collection<ListaInvitado> getInvitados() {
+        return invitados;
+    }
+
+    public void setInvitados(Collection<ListaInvitado> invitados) {
+        this.invitados = invitados;
     }
 }

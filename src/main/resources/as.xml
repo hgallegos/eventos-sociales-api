@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="connection.url">jdbc:mysql://192.95.15.158/service_app</property>
+    <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+    <mapping class="com.hm.eventos.domain.Api"/>
+      <mapping class="com.hm.eventos.domain.Evento"/>
+      <mapping class="com.hm.eventos.domain.EventoCategoria"/>
+      <mapping class="com.hm.eventos.domain.EventoFoto"/>
+      <mapping class="com.hm.eventos.domain.ListaInvitado"/>
+      <mapping class="com.hm.eventos.domain.Posicion"/>
+      <mapping class="com.hm.eventos.domain.Registro"/>
+      <mapping class="com.hm.eventos.domain.Usuario"/>
+      <!-- <property name="connection.username"/> -->
+    <!-- <property name="connection.password"/> -->
+
+    <!-- DB schema will be updated if needed -->
+    <!-- <property name="hbm2ddl.auto">update</property> -->
+  </session-factory>
+</hibernate-configuration>

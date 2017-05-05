@@ -3,17 +3,17 @@ package com.hm.eventos.domain;
 import javax.persistence.*;
 
 /**
- * Created by hans6 on 27-04-2017.
+ * Created by hans6 on 05-05-2017.
  */
 @Entity
-@Table(name = "mg_eventos_categoria", schema = "service_app", catalog = "")
-public class MgEventosCategoria {
+@Table(name = "evento_categoria", schema = "service_app", catalog = "")
+public class EventoCategoria {
     private int id;
     private String nombre;
     private String descripcion;
 
     @Id
-    @Column(name = "id")
+    @Column(name = "Id")
     public int getId() {
         return id;
     }
@@ -23,7 +23,7 @@ public class MgEventosCategoria {
     }
 
     @Basic
-    @Column(name = "nombre")
+    @Column(name = "Nombre")
     public String getNombre() {
         return nombre;
     }
@@ -33,7 +33,7 @@ public class MgEventosCategoria {
     }
 
     @Basic
-    @Column(name = "descripcion")
+    @Column(name = "Descripcion")
     public String getDescripcion() {
         return descripcion;
     }
@@ -47,7 +47,7 @@ public class MgEventosCategoria {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        MgEventosCategoria that = (MgEventosCategoria) o;
+        EventoCategoria that = (EventoCategoria) o;
 
         if (id != that.id) return false;
         if (nombre != null ? !nombre.equals(that.nombre) : that.nombre != null) return false;
