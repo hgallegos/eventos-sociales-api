@@ -1,0 +1,24 @@
+---
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: none
+  datasource:
+    url: jdbc:mysql://192.95.15.158/service_app
+    username: global
+    password: 2DsghFD5YogD
+server:
+  port: 9090
+---
+spring:
+  profiles: server-dev
+  jpa:
+    hibernate:
+      ddl-auto: none
+  datasource:
+    url: jdbc:mysql://127.0.0.1/service_app
+    username: serverapp
+    password: d9F3DSAbVD
+server:
+  port: 9090
+
