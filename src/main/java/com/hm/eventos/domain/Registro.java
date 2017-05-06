@@ -1,6 +1,9 @@
 package com.hm.eventos.domain;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.sql.Timestamp;
 
 /**
@@ -8,11 +11,20 @@ import java.sql.Timestamp;
  */
 @Entity
 public class Registro {
+    private int id;
     private String ip;
     private Timestamp fecha;
     private String actividad;
-    private int id;
-    private Api api;
+
+    @Id
+    @Column(name = "Id")
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     @Basic
     @Column(name = "Ip")
@@ -51,6 +63,7 @@ public class Registro {
 
         Registro registro = (Registro) o;
 
+        if (id != registro.id) return false;
         if (ip != null ? !ip.equals(registro.ip) : registro.ip != null) return false;
         if (fecha != null ? !fecha.equals(registro.fecha) : registro.fecha != null) return false;
         if (actividad != null ? !actividad.equals(registro.actividad) : registro.actividad != null) return false;
@@ -60,29 +73,10 @@ public class Registro {
 
     @Override
     public int hashCode() {
-        int result = ip != null ? ip.hashCode() : 0;
+        int result = id;
+        result = 31 * result + (ip != null ? ip.hashCode() : 0);
         result = 31 * result + (fecha != null ? fecha.hashCode() : 0);
         result = 31 * result + (actividad != null ? actividad.hashCode() : 0);
         return result;
-    }
-
-    @Id
-    @Column(name = "Id")
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "Api_Id", referencedColumnName = "Id", nullable = false)
-    public Api getApi() {
-        return api;
-    }
-
-    public void setApi(Api api) {
-        this.api = api;
     }
 }

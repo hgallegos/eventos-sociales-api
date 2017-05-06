@@ -3,7 +3,6 @@ package com.hm.eventos.domain;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
-import java.util.Set;
 
 /**
  * Created by hans6 on 05-05-2017.
@@ -22,8 +21,6 @@ public class Evento {
     private double pLat;
     private double pLng;
     private String pTipo;
-    private Set<EventoFoto> eventoFotosById;
-    private Set<ListaInvitado> listaInvitadosById;
     private Collection<EventoFoto> fotos;
     private Collection<ListaInvitado> invitados;
 

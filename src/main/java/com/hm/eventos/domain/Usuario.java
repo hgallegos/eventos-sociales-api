@@ -1,5 +1,7 @@
 package com.hm.eventos.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -41,6 +43,7 @@ public class Usuario {
 
     @Basic
     @Column(name = "Contrasena")
+    @JsonIgnore
     public String getContrasena() {
         return contrasena;
     }
