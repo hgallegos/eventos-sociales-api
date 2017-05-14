@@ -10,6 +10,7 @@ import javax.persistence.*;
 public class ListaInvitado {
     private int id;
     private Evento evento;
+    private Usuario usuario;
 
     @Id
     @Column(name = "Id")
@@ -21,23 +22,6 @@ public class ListaInvitado {
         this.id = id;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        ListaInvitado that = (ListaInvitado) o;
-
-        if (id != that.id) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        return id;
-    }
-
     @ManyToOne
     @JoinColumn(name = "Evento_Id", referencedColumnName = "Id", nullable = false)
     public Evento getEvento() {
@@ -46,5 +30,15 @@ public class ListaInvitado {
 
     public void setEvento(Evento evento) {
         this.evento = evento;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "User_Id", referencedColumnName = "Id", nullable = false)
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }
