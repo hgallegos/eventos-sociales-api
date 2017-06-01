@@ -1,6 +1,5 @@
 package com.hm.eventos.repositories;
 
-import com.hm.eventos.projections.UsuarioProjection;
 import com.hm.eventos.domain.Usuario;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

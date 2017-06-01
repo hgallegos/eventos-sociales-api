@@ -1,4 +1,4 @@
-package com.hm.eventos.projections;
+package com.hm.eventos.domain.projections;
 
 import com.hm.eventos.domain.Actividad;
 import com.hm.eventos.domain.Evento;
@@ -10,7 +10,7 @@ import java.util.Collection;
 /**
  * Created by hans6 on 13-05-2017.
  */
-@Projection(name = "UsuarioProjection", types = {Usuario.class})
+@Projection(name = "actividadesYEventos", types = {Usuario.class})
 public interface UsuarioProjection {
 
 
