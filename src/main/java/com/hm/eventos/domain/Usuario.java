@@ -1,6 +1,7 @@
 package com.hm.eventos.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -14,15 +15,16 @@ public class Usuario {
     private int id;
     private String usuario;
     private String contrasena;
-    private String nombre;
     private int edad;
     private String email;
     private String token;
     private String nivel;
+    private Collection<Evento> eventos;
     private Collection<Actividad> actividades;
 
     @Id
     @Column(name = "Id")
+    @GeneratedValue
     public int getId() {
         return id;
     }
@@ -46,18 +48,11 @@ public class Usuario {
         return contrasena;
     }
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
     }
 
-    @Column(name = "Nombre")
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
 
     @Column(name = "Edad")
     public int getEdad() {
@@ -94,6 +89,16 @@ public class Usuario {
     public void setNivel(String nivel) {
         this.nivel = nivel;
     }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    public Collection<Evento> getEventos() {
+        return eventos;
+    }
+
+    public void setEventos(Collection<Evento> eventos) {
+        this.eventos = eventos;
+    }
+
 
     @OneToMany(mappedBy = "usuario")
     public Collection<Actividad> getActividades() {

@@ -12,7 +12,7 @@ import org.springframework.data.rest.core.annotation.RestResource;
 /**
  * Created by hans6 on 27-04-2017.
  */
-@RepositoryRestResource(collectionResourceRel = "usuarios", path = "usuarios", excerptProjection = UsuarioProjection.class)
+@RepositoryRestResource(collectionResourceRel = "usuarios", path = "usuarios")
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
     @RestResource(path = "email", rel = "email")

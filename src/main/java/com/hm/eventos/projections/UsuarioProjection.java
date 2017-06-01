@@ -1,6 +1,7 @@
 package com.hm.eventos.projections;
 
 import com.hm.eventos.domain.Actividad;
+import com.hm.eventos.domain.Evento;
 import com.hm.eventos.domain.Usuario;
 import org.springframework.data.rest.core.config.Projection;
 
@@ -12,11 +13,8 @@ import java.util.Collection;
 @Projection(name = "UsuarioProjection", types = {Usuario.class})
 public interface UsuarioProjection {
 
-    int getId();
 
     String getUsuario();
-
-    String getNombre();
 
     String getEmail();
 
@@ -27,4 +25,6 @@ public interface UsuarioProjection {
     String getNivel();
 
     Collection<Actividad> getActividades();
+
+    Collection<Evento> getEventos();
 }

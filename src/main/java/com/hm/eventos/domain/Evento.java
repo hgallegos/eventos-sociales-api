@@ -11,6 +11,7 @@ import java.util.Set;
 @Entity
 public class Evento {
     private int id;
+    private Usuario usuario;
     private String nombre;
     private String descripcion;
     private Timestamp fechaRegistro;
@@ -27,12 +28,23 @@ public class Evento {
 
     @Id
     @Column(name = "Id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "User_Id")
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     @Column(name = "Nombre")
