@@ -25,6 +25,7 @@ public class Evento {
     private String pTipo;
     private Collection<EventoFoto> eventoFotos;
     private Set<ListaInvitado> listaInvitados;
+    private Set<AsignaCategoria> asignaCategorias;
 
     @Id
     @Column(name = "Id")
@@ -147,11 +148,11 @@ public class Evento {
     }
 
     @OneToMany(orphanRemoval = true, cascade = {CascadeType.ALL}, fetch = FetchType.LAZY,mappedBy = "evento")
-    public Collection<EventoFoto> getListaFotos() {
+    public Collection<EventoFoto> getEventoFotos() {
         return eventoFotos;
     }
 
-    public void setListaFotos(Collection<EventoFoto> eventoFotos) {
+    public void setEventoFotos(Collection<EventoFoto> eventoFotos) {
         this.eventoFotos = eventoFotos;
     }
 
@@ -164,4 +165,12 @@ public class Evento {
         this.listaInvitados = listaInvitados;
     }
 
+    @OneToMany(orphanRemoval = true, cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "evento")
+    public Set<AsignaCategoria> getAsignaCategorias() {
+        return asignaCategorias;
+    }
+
+    public void setAsignaCategorias(Set<AsignaCategoria> asignaCategorias) {
+        this.asignaCategorias = asignaCategorias;
+    }
 }
