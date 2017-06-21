@@ -14,6 +14,7 @@
       <mapping class="com.hm.eventos.domain.Actividad"/>
       <mapping class="com.hm.eventos.domain.Usuario"/>
     <mapping class="com.hm.eventos.domain.EventoFoto"/>
+    <mapping class="com.hm.eventos.domain.AsignaCategoria"/>
     <!-- <property name="connection.username"/> -->
     <!-- <property name="connection.password"/> -->
 

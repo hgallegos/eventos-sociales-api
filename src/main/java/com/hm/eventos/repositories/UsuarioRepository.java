@@ -18,5 +18,5 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     Page<Usuario> findByEmail(@Param("email") String name, Pageable pageable);
 
     @RestResource(path = "usuario", rel = "usuario")
-    Page<Usuario> findByUsuarioIsStartingWith(@Param("usuario") String usuario, Pageable pageable);
+    Page<Usuario> findByUsuarioContainingIgnoreCase(@Param("usuario") String usuario, Pageable pageable);
 }
