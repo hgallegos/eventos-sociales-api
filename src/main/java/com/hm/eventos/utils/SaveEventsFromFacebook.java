@@ -34,6 +34,7 @@ public class SaveEventsFromFacebook {
 
     @Scheduled(cron = "0 0 4 * * *")
     public void saveEventsFromFacebook() {
+        System.out.println(LocalDateTime.now());
         PagedList<Event> events = getListOfEventsByCountry(getEventsFromFracebook(DEFAULT_COUNTRY, null), DEFAULT_COUNTRY);
         if(events != null) {
             System.out.println("Guardando " + events.size() + "eventos");
@@ -56,8 +57,11 @@ public class SaveEventsFromFacebook {
 
     }
     private PagedList<Event> getEventsFromFracebook(String query, PagingParameters pagingParameters) {
-        return pagingParameters!=null ? facebook.eventOperations().search(query): facebook.eventOperations().search(query,pagingParameters);
-    }
+        if (pagingParameters != null) {
+            return facebook.eventOperations().search(query, pagingParameters);
+        } else {
+            return facebook.eventOperations().search(query);
+        }    }
 
     private Facebook getFacebook(){
         facebookTemplate.setApiVersion("2.9");
