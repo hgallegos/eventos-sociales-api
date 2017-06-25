@@ -8,7 +8,9 @@ import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.facebook.api.PagedList;
 import org.springframework.social.facebook.api.PagingParameters;
 import org.springframework.social.facebook.api.impl.FacebookTemplate;
+import org.springframework.stereotype.Component;
 
+import javax.persistence.Column;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Date;
@@ -18,6 +20,7 @@ import java.util.stream.Collectors;
 /**
  * Created by hans6 on 25-06-2017.
  */
+@Component
 public class SaveEventsFromFacebook {
 
     @Autowired
