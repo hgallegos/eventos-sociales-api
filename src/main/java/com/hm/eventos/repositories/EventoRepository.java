@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.rest.core.annotation.RestResource;
 
+import java.awt.*;
 import java.util.Collection;
 import java.util.List;
 
@@ -22,16 +23,18 @@ public interface EventoRepository extends JpaRepository<Evento, Integer> {
 
     @RestResource(rel = "filterBy", path = "filterBy")
     @Query(value = "select * from evento where Nombre like %:nombre% and P_Direccion like %:direccion% and id = " +
-            "(select Id_Evento from (asigna_categoria join evento_categoria) where :categoria = evento_categoria.Nombre)" +
+            "(select Id_Evento from (asigna_categoria join evento_categoria) where :categoria = evento_categoria.Id)" +
             "order by ?#{#pageable}",
             countQuery = "select count(*) from evento where Nombre like %:nombre% and P_Direccion like %:direccion% and id = " +
-                    "(select Id_Evento from (asigna_categoria join evento_categoria) where evento_categoria.Nombre like %:categoria%)",
+                    "(select Id_Evento from (asigna_categoria join evento_categoria) where :categoria = evento_categoria.Id)",
             nativeQuery = true)
-    Page<Evento> findAllBy(@Param("nombre") String nombre, @Param("direccion") String direccion, @Param("categoria") String categoria, Pageable pageable);
+    Page<Evento> findAllBy(@Param("nombre") String nombre, @Param("direccion") String direccion, @Param("categoria") int categoria, Pageable pageable);
 
     @RestResource(rel = "nombreODireccion", path = "nombreODireccion")
     Page<Evento> findAllByNombreContainingIgnoreCaseAndPDireccionContainingIgnoreCase(
             @Param("nombre") String nombre, @Param("direccion") String direccion, Pageable pageable);
-    
+
+    Evento findByFacebookId(long id);
+
 
 }

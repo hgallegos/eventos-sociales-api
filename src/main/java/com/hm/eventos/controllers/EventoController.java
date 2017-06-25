@@ -31,9 +31,6 @@ public class EventoController {
     private EventoService eventoService;
 
     @Autowired
-    private EventoRepository eventoRepository;
-
-    @Autowired
     private EventoResourceAssembler eventoResourceAssembler;
 
     @SuppressWarnings("SpringJavaAutowiringInspection")

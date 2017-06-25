@@ -7,6 +7,14 @@ spring:
     url: jdbc:mysql://192.95.15.158/service_app
     username: global
     password: 2DsghFD5YogD
+  social:
+    facebook:
+      app-id: 1226573064119549
+      app-secret: 33759002bb590e270a247110c7eac84f
+  devtools:
+    remote:
+      debug:
+        enabled: true
 server:
   port: 9090
 ---
@@ -19,6 +27,11 @@ spring:
     url: jdbc:mysql://127.0.0.1/service_app
     username: serverapp
     password: d9F3DSAbVD
+  social:
+    facebook:
+      app-id: 1226573064119549
+      app-secret: 33759002bb590e270a247110c7eac84f
 server:
   port: 9090
+
 

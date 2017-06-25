@@ -3,6 +3,7 @@ package com.hm.eventos.domain;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Set;
 
 /**
@@ -14,9 +15,9 @@ public class Evento {
     private Usuario usuario;
     private String nombre;
     private String descripcion;
-    private Timestamp fechaRegistro;
-    private Timestamp fechaInicio;
-    private Timestamp fechaFin;
+    private Date fechaRegistro;
+    private Date fechaInicio;
+    private Date fechaFin;
     private String visibilidad;
     private String pNombre;
     private String pDireccion;
@@ -26,10 +27,11 @@ public class Evento {
     private Collection<EventoFoto> eventoFotos;
     private Set<ListaInvitado> listaInvitados;
     private Set<AsignaCategoria> asignaCategorias;
+    private long facebookId;
 
     @Id
     @Column(name = "Id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public int getId() {
         return id;
     }
@@ -39,7 +41,7 @@ public class Evento {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "User_Id")
+    @JoinColumn(name = "User_Id", referencedColumnName = "Id", nullable = false)
     public Usuario getUsuario() {
         return usuario;
     }
@@ -67,29 +69,32 @@ public class Evento {
     }
 
     @Column(name = "Fecha_Registro")
-    public Timestamp getFechaRegistro() {
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getFechaRegistro() {
         return fechaRegistro;
     }
 
-    public void setFechaRegistro(Timestamp fechaRegistro) {
+    public void setFechaRegistro(Date fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
 
     @Column(name = "Fecha_Inicio")
-    public Timestamp getFechaInicio() {
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getFechaInicio() {
         return fechaInicio;
     }
 
-    public void setFechaInicio(Timestamp fechaInicio) {
+    public void setFechaInicio(Date fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
     @Column(name = "Fecha_Fin")
-    public Timestamp getFechaFin() {
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getFechaFin() {
         return fechaFin;
     }
 
-    public void setFechaFin(Timestamp fechaFin) {
+    public void setFechaFin(Date fechaFin) {
         this.fechaFin = fechaFin;
     }
 
@@ -147,7 +152,7 @@ public class Evento {
         this.pTipo = pTipo;
     }
 
-    @OneToMany(orphanRemoval = true, cascade = {CascadeType.ALL}, fetch = FetchType.LAZY,mappedBy = "evento")
+    @OneToMany(orphanRemoval = true, cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "evento")
     public Collection<EventoFoto> getEventoFotos() {
         return eventoFotos;
     }
@@ -172,5 +177,14 @@ public class Evento {
 
     public void setAsignaCategorias(Set<AsignaCategoria> asignaCategorias) {
         this.asignaCategorias = asignaCategorias;
+    }
+
+    public long getFacebookId() {
+        return facebookId;
+    }
+
+    @Column(name = "Facebook_Id")
+    public void setFacebookId(long facebookId) {
+        this.facebookId = facebookId;
     }
 }
