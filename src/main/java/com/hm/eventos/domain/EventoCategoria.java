@@ -16,6 +16,7 @@ public class EventoCategoria {
 
     @Id
     @Column(name = "Id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public int getId() {
         return id;
     }

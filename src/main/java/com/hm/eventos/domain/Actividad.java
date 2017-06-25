@@ -16,6 +16,7 @@ public class Actividad {
 
     @Id
     @Column(name = "Id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public int getId() {
         return id;
     }
