@@ -1,4 +1,4 @@
-package com.hm.eventos.config.security;
+/*package com.hm.eventos.config.security;
 
 import com.auth0.spring.security.api.JwtWebSecurityConfigurer;
 import org.springframework.beans.factory.annotation.Value;
