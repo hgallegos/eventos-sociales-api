@@ -11,6 +11,8 @@ import com.javadocmd.simplelatlng.util.LengthUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.social.facebook.api.Event;
+import org.springframework.social.facebook.api.Facebook;
+import org.springframework.social.facebook.api.impl.FacebookTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -18,6 +20,8 @@ import java.time.ZoneOffset;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.hm.eventos.controllers.FacebookController.TOKEN;
 
 /**
  * Created by hans6 on 17-06-2017.
@@ -34,6 +38,9 @@ public class EventoServiceImpl implements EventoService {
 
     @Autowired
     UsuarioRepository usuarioRepository;
+
+    private FacebookTemplate facebookTemplate = new FacebookTemplate(TOKEN);
+    private Facebook facebook = getFacebook();
 
     @Override
     public Page<Evento> getEventosNearTo(double lat, double lng) {
@@ -61,8 +68,16 @@ public class EventoServiceImpl implements EventoService {
     @Override
     public Evento saveEventoFromFacebook(Event event) {
         if (eventoRepository.findByFacebookId(Long.parseLong(event.getId())) == null) {
+            if (event.getCover() != null) {
+                System.out.println(event.getCover().getSource());
+            } else {
+                event = facebook.eventOperations().getEvent(event.getId());
+            }
             return eventoRepository.save(facebookEventToEvento(event));
         } else {
+            if (event.getCover() != null) {
+                System.out.println(event.getCover().getSource());
+            }
             return null;
         }
     }
@@ -115,5 +130,10 @@ public class EventoServiceImpl implements EventoService {
 
     private Usuario usuario() {
         return usuarioRepository.findOne(FACEBOOK_USER);
+    }
+
+    private Facebook getFacebook() {
+        facebookTemplate.setApiVersion("2.9");
+        return facebookTemplate;
     }
 }

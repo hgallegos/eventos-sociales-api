@@ -35,7 +35,7 @@ public class AsignaCategoria {
     }
 
     @ManyToOne
-    @JoinColumn(name = "Id_Categoria")
+    @JoinColumn(name = "Id_Categoria", referencedColumnName = "Id")
     public EventoCategoria getCategoria() {
         return categoria;
     }

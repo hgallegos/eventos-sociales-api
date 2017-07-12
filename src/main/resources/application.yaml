@@ -11,12 +11,12 @@ spring:
     facebook:
       app-id: 1226573064119549
       app-secret: 33759002bb590e270a247110c7eac84f
-  devtools:
-    remote:
-      debug:
-        enabled: true
 server:
   port: 9090
+auth0:
+  audience: eventos-sociales-api
+  issuer: https://hgallegos.auth0.com/
+  secret: WER0cTA1MWM5R3p3TGVLNUNLQ3U1OWpxTWtvVWVFUHJ2TnAwMFI2blRMMEt0ODNnUVZYN3ptTC0yVmEyWmpvbg==
 ---
 spring:
   profiles: server-dev
@@ -33,5 +33,9 @@ spring:
       app-secret: 33759002bb590e270a247110c7eac84f
 server:
   port: 9090
+auth0:
+  audience: eventos-sociales-api
+  issuer: https://hgallegos.auth0.com/
+  secret: WER0cTA1MWM5R3p3TGVLNUNLQ3U1OWpxTWtvVWVFUHJ2TnAwMFI2blRMMEt0ODNnUVZYN3ptTC0yVmEyWmpvbg==
 
 

@@ -1,6 +1,7 @@
 package com.hm.eventos.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import java.util.Set;
  * Created by hans6 on 05-05-2017.
  */
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Usuario {
     private int id;
     private String usuario;
