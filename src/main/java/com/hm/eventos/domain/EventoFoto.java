@@ -1,13 +1,16 @@
 package com.hm.eventos.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by hans6 on 05-05-2017.
  */
 @Entity
 @Table(name = "evento_foto", schema = "service_app")
-public class EventoFoto {
+public class EventoFoto implements Serializable{
     private int id;
     private String titulo;
     private String descripcion;

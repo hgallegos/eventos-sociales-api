@@ -2,6 +2,7 @@ package com.hm.eventos.domain;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * Created by hans6 on 05-05-2017.
@@ -10,9 +11,10 @@ import java.sql.Timestamp;
 public class Actividad {
     private int id;
     private String ip;
-    private Timestamp fecha;
+    private Date fecha;
     private String tipo;
     private Usuario usuario;
+    private int apiId;
 
     @Id
     @Column(name = "Id")
@@ -35,11 +37,12 @@ public class Actividad {
     }
 
     @Column(name = "Fecha")
-    public Timestamp getFecha() {
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(Timestamp fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
@@ -60,5 +63,14 @@ public class Actividad {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    @Column(name = "Api_Id")
+    public int getApiId() {
+        return apiId;
+    }
+
+    public void setApiId(int apiId) {
+        this.apiId = apiId;
     }
 }

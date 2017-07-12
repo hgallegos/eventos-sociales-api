@@ -21,7 +21,7 @@ public class RestCorsConfig extends RepositoryRestConfigurerAdapter{
 
         config.getCorsRegistry().addMapping("/**")
                 .allowedOrigins("*")
-                .allowedMethods("PUT", "DELETE", "OPTIONS", "GET", "POST")
+                .allowedMethods("PUT", "DELETE", "OPTIONS", "GET", "POST", "PATCH")
                 .allowedHeaders("*")
                 .allowCredentials(true)
                 .maxAge(3600);

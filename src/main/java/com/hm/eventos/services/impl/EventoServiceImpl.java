@@ -1,7 +1,9 @@
 package com.hm.eventos.services.impl;
 
 import com.hm.eventos.domain.Evento;
+import com.hm.eventos.domain.EventoFoto;
 import com.hm.eventos.domain.Usuario;
+import com.hm.eventos.repositories.EventoFotoRepository;
 import com.hm.eventos.repositories.EventoRepository;
 import com.hm.eventos.repositories.UsuarioRepository;
 import com.hm.eventos.services.EventoService;
@@ -17,6 +19,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,12 +36,17 @@ public class EventoServiceImpl implements EventoService {
     private static final String PUBLICO = "PUBLICO";
     private static final String FACEBOOK_TYPE = "from Facebook";
     private static final int FACEBOOK_USER = 103;
+    private static final String[] ALL_FIELDS = new String[]{"id", "cover", "description", "end_time", "name", "owner", "parent_group", "start_time", "ticket_uri", "timezone", "updated_time", "place"};
 
     @Autowired
     EventoRepository eventoRepository;
 
     @Autowired
     UsuarioRepository usuarioRepository;
+
+    @Autowired
+    EventoFotoRepository eventoFotoRepository;
+
 
     private FacebookTemplate facebookTemplate = new FacebookTemplate(TOKEN);
     private Facebook facebook = getFacebook();
@@ -68,16 +77,13 @@ public class EventoServiceImpl implements EventoService {
     @Override
     public Evento saveEventoFromFacebook(Event event) {
         if (eventoRepository.findByFacebookId(Long.parseLong(event.getId())) == null) {
-            if (event.getCover() != null) {
-                System.out.println(event.getCover().getSource());
-            } else {
-                event = facebook.eventOperations().getEvent(event.getId());
+            Evento evento = eventoRepository.save(facebookEventToEvento(event));
+            if (event.getCover() == null) {
+                event = facebook.fetchObject(event.getId(), Event.class, ALL_FIELDS);
             }
-            return eventoRepository.save(facebookEventToEvento(event));
+            eventoFotoRepository.save(eventoFotoFromEvent(event, evento));
+            return evento;
         } else {
-            if (event.getCover() != null) {
-                System.out.println(event.getCover().getSource());
-            }
             return null;
         }
     }
@@ -126,6 +132,15 @@ public class EventoServiceImpl implements EventoService {
         evento.setFacebookId(Long.parseLong(event.getId()));
 
         return evento;
+    }
+
+    private EventoFoto eventoFotoFromEvent(Event event, Evento evento) {
+        EventoFoto foto = new EventoFoto();
+        foto.setTitulo(event.getName());
+        foto.setDescripcion("");
+        foto.setUrl(event.getCover().getSource());
+        foto.setEvento(evento);
+        return foto;
     }
 
     private Usuario usuario() {
