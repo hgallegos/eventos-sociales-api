@@ -1,4 +1,4 @@
-package com.hm.eventos.config;
+package com.hm.eventos.config.cors;
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
