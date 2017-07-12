@@ -1,5 +1,7 @@
 package com.hm.eventos.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
@@ -152,7 +154,7 @@ public class Evento {
         this.pTipo = pTipo;
     }
 
-    @OneToMany(orphanRemoval = true, cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "evento")
+    @OneToMany(orphanRemoval = true, cascade = {CascadeType.REMOVE}, fetch = FetchType.EAGER, mappedBy = "evento")
     public Collection<EventoFoto> getEventoFotos() {
         return eventoFotos;
     }
