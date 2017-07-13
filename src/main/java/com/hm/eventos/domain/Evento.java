@@ -27,7 +27,7 @@ public class Evento {
     private double pLng;
     private String pTipo;
     private Collection<EventoFoto> eventoFotos;
-    private Set<ListaInvitado> listaInvitados;
+    private Collection<ListaInvitado> listaInvitados;
     private Set<AsignaCategoria> asignaCategorias;
     private long facebookId;
 
@@ -164,15 +164,6 @@ public class Evento {
     }
 
     @OneToMany(orphanRemoval = true, cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "evento")
-    public Set<ListaInvitado> getListaInvitados() {
-        return listaInvitados;
-    }
-
-    public void setListaInvitados(Set<ListaInvitado> listaInvitados) {
-        this.listaInvitados = listaInvitados;
-    }
-
-    @OneToMany(orphanRemoval = true, cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "evento")
     public Set<AsignaCategoria> getAsignaCategorias() {
         return asignaCategorias;
     }
@@ -188,5 +179,14 @@ public class Evento {
     @Column(name = "Facebook_Id")
     public void setFacebookId(long facebookId) {
         this.facebookId = facebookId;
+    }
+
+    @OneToMany(orphanRemoval = true, cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "evento")
+    public Collection<ListaInvitado> getListaInvitados() {
+        return listaInvitados;
+    }
+
+    public void setListaInvitados(Collection<ListaInvitado> listaInvitados) {
+        this.listaInvitados = listaInvitados;
     }
 }

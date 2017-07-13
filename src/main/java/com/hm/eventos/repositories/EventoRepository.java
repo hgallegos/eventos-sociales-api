@@ -23,10 +23,10 @@ public interface EventoRepository extends JpaRepository<Evento, Integer> {
 
     @RestResource(rel = "filterBy", path = "filterBy")
     @Query(value = "select * from evento where Nombre like %:nombre% and P_Direccion like %:direccion% and id in " +
-            "(select Id_Evento from (asigna_categoria join evento_categoria) where :categoria = evento_categoria.Id)" +
+            "(select Id_Evento from asigna_categoria where asigna_categoria.Id_Categoria = :categoria)" +
             "order by ?#{#pageable}",
             countQuery = "select count(*) from evento where Nombre like %:nombre% and P_Direccion like %:direccion% and id in " +
-                    "(select Id_Evento from (asigna_categoria join evento_categoria) where :categoria = evento_categoria.Id)",
+                    "(select Id_Evento from asigna_categoria where asigna_categoria.Id_Categoria = :categoria)",
             nativeQuery = true)
     Page<Evento> findAllBy(@Param("nombre") String nombre, @Param("direccion") String direccion, @Param("categoria") int categoria, Pageable pageable);
 
