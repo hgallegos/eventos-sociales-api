@@ -1,6 +1,8 @@
 package com.hm.eventos.utils;
 
 import com.hm.eventos.services.EventoService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.social.facebook.api.Event;
@@ -23,6 +25,8 @@ import java.util.stream.Collectors;
 @Component
 public class SaveEventsFromFacebook {
 
+    private static final Logger log = LoggerFactory.getLogger(SaveEventsFromFacebook.class);
+
     @Autowired
     private EventoService eventoService;
 
@@ -40,16 +44,16 @@ public class SaveEventsFromFacebook {
     }
 
     private void saveFirstEvents() {
-        System.out.println(LocalDateTime.now());
+        log.info("The time is now{}", LocalDateTime.now());
         PagedList<Event> events = getListOfEventsByCountry(getEventsFromFracebook(query, null), DEFAULT_COUNTRY);
         if (events != null) {
-            System.out.println("Guardando " + events.size() + "eventos");
+            log.info("Guardando " + events.size() + "eventos");
             for (Event event :
                     events) {
                 eventoService.saveEventoFromFacebook(event);
 
             }
-            System.out.println("Eventos guardados");
+            log.info("Eventos guardados");
             saveNextEvents(events);
         }
     }
@@ -58,10 +62,10 @@ public class SaveEventsFromFacebook {
         if (events.getNextPage() != null) {
             PagedList<Event> nextEvents = getListOfEventsByCountry(getEventsFromFracebook(query, events.getNextPage()), DEFAULT_COUNTRY);
             if (nextEvents != null) {
-                System.out.println("Guardando " + nextEvents.size() + "eventos");
+                log.info("Guardando " + nextEvents.size() + "eventos");
 
                 nextEvents.forEach(event -> eventoService.saveEventoFromFacebook(event));
-                System.out.println("Eventos guardados");
+                log.info("Eventos guardados");
 
                 this.saveNextEvents(nextEvents);
             } else {
