@@ -35,7 +35,7 @@ public class FacebookController {
     @GetMapping(value = "/facebook")
     @ResponseBody
     public ResponseEntity<String> saveEventsFromFacebook() {
-        PagedList<Event> events = getListOfEventsByCountry(getEventsFromFracebook(DEFAULT_COUNTRY, null), DEFAULT_COUNTRY);
+        PagedList<Event> events = getListOfEventsByCountry(getEventsFromFracebook("*", null), DEFAULT_COUNTRY);
         if (events != null) {
             for (Event event :
                     events) {
