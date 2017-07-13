@@ -34,7 +34,7 @@ public class SaveEventsFromFacebook {
     private FacebookTemplate facebookTemplate = new FacebookTemplate(TOKEN);
     private Facebook facebook = getFacebook();
 
-    @Scheduled(cron = "0 0 0 * * *")
+    @Scheduled(fixedRate = 5000)
     public void saveEventsFromFacebook() {
         saveFirstEvents();
     }

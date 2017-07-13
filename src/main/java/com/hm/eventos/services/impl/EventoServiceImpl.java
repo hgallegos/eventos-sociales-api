@@ -86,8 +86,11 @@ public class EventoServiceImpl implements EventoService {
                 event = facebook.fetchObject(event.getId(), Event.class, ALL_FIELDS);
             }
             List<EventoFoto> fotos = new ArrayList<>();
-            fotos.add(eventoFotoRepository.save(eventoFotoFromEvent(event, evento)));
-            evento.setEventoFotos(fotos);
+            EventoFoto eventoFoto = eventoFotoFromEvent(event, evento);
+            if(eventoFoto != null) {
+                fotos.add(eventoFotoRepository.save(eventoFotoFromEvent(event, evento)));
+                evento.setEventoFotos(fotos);
+            }
             evento.setAsignaCategorias(getCategories(evento.getDescripcion(), evento));
             if(!evento.getAsignaCategorias().isEmpty()) {
                 eventoRepository.save(evento);
@@ -146,12 +149,17 @@ public class EventoServiceImpl implements EventoService {
     }
 
     private EventoFoto eventoFotoFromEvent(Event event, Evento evento) {
-        EventoFoto foto = new EventoFoto();
-        foto.setTitulo(event.getName());
-        foto.setDescripcion("");
-        foto.setUrl(event.getCover().getSource());
-        foto.setEvento(evento);
-        return foto;
+        if(event.getCover().getSource() != null){
+            EventoFoto foto = new EventoFoto();
+            foto.setTitulo(event.getName());
+            foto.setDescripcion("");
+            foto.setUrl(event.getCover().getSource());
+            foto.setEvento(evento);
+            return foto;
+        } else {
+            return null;
+        }
+
     }
 
     private Usuario usuario() {
