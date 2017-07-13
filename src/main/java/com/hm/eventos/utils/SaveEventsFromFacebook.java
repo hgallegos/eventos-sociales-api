@@ -38,7 +38,7 @@ public class SaveEventsFromFacebook {
     private FacebookTemplate facebookTemplate = new FacebookTemplate(TOKEN);
     private Facebook facebook = getFacebook();
 
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(cron = "0 0 4 * * *")
     public void saveEventsFromFacebook() {
         saveFirstEvents();
     }
@@ -47,7 +47,7 @@ public class SaveEventsFromFacebook {
         log.info("The time is now{}", LocalDateTime.now());
         PagedList<Event> events = getListOfEventsByCountry(getEventsFromFracebook(query, null), DEFAULT_COUNTRY);
         if (events != null) {
-            log.info("Guardando " + events.size() + "eventos");
+            log.info("Guardando " + events.size() + " eventos");
             for (Event event :
                     events) {
                 eventoService.saveEventoFromFacebook(event);
@@ -62,7 +62,7 @@ public class SaveEventsFromFacebook {
         if (events.getNextPage() != null) {
             PagedList<Event> nextEvents = getListOfEventsByCountry(getEventsFromFracebook(query, events.getNextPage()), DEFAULT_COUNTRY);
             if (nextEvents != null) {
-                log.info("Guardando " + nextEvents.size() + "eventos");
+                log.info("Guardando " + nextEvents.size() + " eventos");
 
                 nextEvents.forEach(event -> eventoService.saveEventoFromFacebook(event));
                 log.info("Eventos guardados");

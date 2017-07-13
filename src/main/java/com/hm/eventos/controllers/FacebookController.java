@@ -1,6 +1,9 @@
 package com.hm.eventos.controllers;
 
 import com.hm.eventos.services.EventoService;
+import com.hm.eventos.utils.SaveEventsFromFacebook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.BasePathAwareController;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
@@ -23,6 +26,8 @@ import java.util.stream.Collectors;
 @BasePathAwareController
 public class FacebookController {
 
+    private static final Logger log = LoggerFactory.getLogger(FacebookController.class);
+
     @Autowired
     private EventoService eventoService;
 
@@ -44,13 +49,15 @@ public class FacebookController {
     }
 
     private void saveFirstEvents() {
+        log.info("The time is now{}", LocalDateTime.now());
         PagedList<Event> events = getListOfEventsByCountry(getEventsFromFracebook(query, null), DEFAULT_COUNTRY);
         if (events != null) {
+            log.info("Guardando " + events.size() + " eventos");
             for (Event event :
                     events) {
                 eventoService.saveEventoFromFacebook(event);
-
             }
+            log.info("Eventos guardados");
             saveNextEvents(events);
         }
     }
@@ -59,11 +66,13 @@ public class FacebookController {
         if (events.getNextPage() != null) {
             PagedList<Event> nextEvents = getListOfEventsByCountry(getEventsFromFracebook(query, events.getNextPage()), DEFAULT_COUNTRY);
             if (nextEvents != null) {
+                log.info("Guardando " + nextEvents.size() + " eventos");
                 nextEvents.forEach(event -> eventoService.saveEventoFromFacebook(event));
+                log.info("Eventos guardados");
                 this.saveNextEvents(nextEvents);
             } else {
                 this.query = changeQuery();
-                if(this.query != null) {
+                if (this.query != null) {
                     this.saveFirstEvents();
                 }
 
