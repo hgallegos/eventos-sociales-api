@@ -29,13 +29,22 @@ public class FacebookController {
     public static final String TOKEN = "EAARbj8vHJP0BAE0OfRSz9ZCXcn9XgsliksOYbigBN0ZBBQ3uJUeQ1Ed1z4jneZB65nnx26tWIZAZA1rbldKMlmZBZB7xzuemrBRHJsc7c6nQVMJG50VBZBTp0du0ZB6zn8kS9j0sVoUByZAcXuTaEEaZAXrwDqcsCDfUGNbc2bWFI7iTgZDZD";
     private static final String DEFAULT_COUNTRY = "chile";
 
+    private String query = "chile";
+
     private FacebookTemplate facebookTemplate = new FacebookTemplate(TOKEN);
     private Facebook facebook = getFacebook();
 
     @GetMapping(value = "/facebook")
     @ResponseBody
     public ResponseEntity<String> saveEventsFromFacebook() {
-        PagedList<Event> events = getListOfEventsByCountry(getEventsFromFracebook("*", null), DEFAULT_COUNTRY);
+        saveFirstEvents();
+
+
+        return ResponseEntity.ok("ok");
+    }
+
+    private void saveFirstEvents() {
+        PagedList<Event> events = getListOfEventsByCountry(getEventsFromFracebook(query, null), DEFAULT_COUNTRY);
         if (events != null) {
             for (Event event :
                     events) {
@@ -44,20 +53,51 @@ public class FacebookController {
             }
             saveNextEvents(events);
         }
-
-
-        return ResponseEntity.ok("ok");
     }
 
     private void saveNextEvents(PagedList<Event> events) {
         if (events.getNextPage() != null) {
-            PagedList<Event> nextEvents = getListOfEventsByCountry(getEventsFromFracebook("*", events.getNextPage()), DEFAULT_COUNTRY);
+            PagedList<Event> nextEvents = getListOfEventsByCountry(getEventsFromFracebook(query, events.getNextPage()), DEFAULT_COUNTRY);
             if (nextEvents != null) {
                 nextEvents.forEach(event -> eventoService.saveEventoFromFacebook(event));
                 this.saveNextEvents(nextEvents);
+            } else {
+                this.query = changeQuery();
+                if(this.query != null) {
+                    this.saveFirstEvents();
+                }
+
             }
         }
 
+    }
+
+    private String changeQuery() {
+        switch (query) {
+            case "chile":
+                return "santiago";
+            case "santiago":
+                return "chillan";
+            case "chillan":
+                return "concepcion";
+            case "concepcion":
+                return "valparaiso";
+            case "valparaiso":
+                return "viña del mar";
+            case "viña del mar":
+                return "arica";
+            case "arica":
+                return "puerto montt";
+            case "puerto montt":
+                return "la serena";
+            case "la serena":
+                return "los angeles";
+            case "los angeles":
+                return null;
+
+            default:
+                return null;
+        }
     }
 
     private PagedList<Event> getEventsFromFracebook(String query, PagingParameters pagingParameters) {
