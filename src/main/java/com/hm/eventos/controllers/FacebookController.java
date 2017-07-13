@@ -51,7 +51,7 @@ public class FacebookController {
 
     private void saveNextEvents(PagedList<Event> events) {
         if (events.getNextPage() != null) {
-            PagedList<Event> nextEvents = getListOfEventsByCountry(getEventsFromFracebook(DEFAULT_COUNTRY, events.getNextPage()), DEFAULT_COUNTRY);
+            PagedList<Event> nextEvents = getListOfEventsByCountry(getEventsFromFracebook("*", events.getNextPage()), DEFAULT_COUNTRY);
             if (nextEvents != null) {
                 nextEvents.forEach(event -> eventoService.saveEventoFromFacebook(event));
                 this.saveNextEvents(nextEvents);
