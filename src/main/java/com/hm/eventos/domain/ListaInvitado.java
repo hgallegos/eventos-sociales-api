@@ -1,5 +1,7 @@
 package com.hm.eventos.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 /**
@@ -7,6 +9,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "lista_invitado", schema = "service_app")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class ListaInvitado {
     private int id;
     private Evento evento;

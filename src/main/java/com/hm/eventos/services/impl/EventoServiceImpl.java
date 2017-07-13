@@ -1,8 +1,7 @@
 package com.hm.eventos.services.impl;
 
-import com.hm.eventos.domain.Evento;
-import com.hm.eventos.domain.EventoFoto;
-import com.hm.eventos.domain.Usuario;
+import com.hm.eventos.domain.*;
+import com.hm.eventos.repositories.EventoCategoriaRepository;
 import com.hm.eventos.repositories.EventoFotoRepository;
 import com.hm.eventos.repositories.EventoRepository;
 import com.hm.eventos.repositories.UsuarioRepository;
@@ -19,10 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.hm.eventos.controllers.FacebookController.TOKEN;
@@ -37,6 +33,11 @@ public class EventoServiceImpl implements EventoService {
     private static final String FACEBOOK_TYPE = "from Facebook";
     private static final int FACEBOOK_USER = 103;
     private static final String[] ALL_FIELDS = new String[]{"id", "cover", "description", "end_time", "name", "owner", "parent_group", "start_time", "ticket_uri", "timezone", "updated_time", "place"};
+    private static final int MUSICA = 8;
+    private static final int CULTURAl = 1;
+    private static final int VIDA_NOCTURNA = 6;
+    private static final int MISC = 2;
+    private static final int FAMILIAR = 10;
 
     @Autowired
     EventoRepository eventoRepository;
@@ -46,6 +47,9 @@ public class EventoServiceImpl implements EventoService {
 
     @Autowired
     EventoFotoRepository eventoFotoRepository;
+
+    @Autowired
+    EventoCategoriaRepository eventoCategoriaRepository;
 
 
     private FacebookTemplate facebookTemplate = new FacebookTemplate(TOKEN);
@@ -81,7 +85,13 @@ public class EventoServiceImpl implements EventoService {
             if (event.getCover() == null) {
                 event = facebook.fetchObject(event.getId(), Event.class, ALL_FIELDS);
             }
-            eventoFotoRepository.save(eventoFotoFromEvent(event, evento));
+            List<EventoFoto> fotos = new ArrayList<>();
+            fotos.add(eventoFotoRepository.save(eventoFotoFromEvent(event, evento)));
+            evento.setEventoFotos(fotos);
+            evento.setAsignaCategorias(getCategories(evento.getDescripcion(), evento));
+            if(!evento.getAsignaCategorias().isEmpty()) {
+                eventoRepository.save(evento);
+            }
             return evento;
         } else {
             return null;
@@ -150,5 +160,42 @@ public class EventoServiceImpl implements EventoService {
     private Facebook getFacebook() {
         facebookTemplate.setApiVersion("2.9");
         return facebookTemplate;
+    }
+
+    private Set<AsignaCategoria> getCategories(String description, Evento evento) {
+        Set<AsignaCategoria> asignaCategorias = new HashSet<>();
+        AsignaCategoria asignaCategoria = new AsignaCategoria();
+        boolean oneAtLeast = false;
+        if (description.contains("usica") || description.contains("úsica") || description.contains("oncierto")) {
+            asignaCategoria.setCategoria(eventoCategoriaRepository.findOne(MUSICA));
+            asignaCategoria.setEvento(evento);
+            asignaCategorias.add(asignaCategoria);
+            oneAtLeast = true;
+        }
+        if (description.contains("ultura")) {
+            asignaCategoria.setEvento(evento);
+            asignaCategoria.setCategoria(eventoCategoriaRepository.findOne(CULTURAl));
+            asignaCategorias.add(asignaCategoria);
+            oneAtLeast = true;
+        }
+        if (description.contains("amilia")) {
+            asignaCategoria.setEvento(evento);
+            asignaCategoria.setCategoria(eventoCategoriaRepository.findOne(FAMILIAR));
+            asignaCategorias.add(asignaCategoria);
+            oneAtLeast = true;
+        }
+        if (description.contains("pub") || description.contains("Pub") || description.contains("Noche") || description.contains("noche") || description.contains("octurna")) {
+            asignaCategoria.setCategoria(eventoCategoriaRepository.findOne(VIDA_NOCTURNA));
+            asignaCategoria.setEvento(evento);
+            asignaCategorias.add(asignaCategoria);
+            oneAtLeast = true;
+        }
+        if(!oneAtLeast) {
+            asignaCategoria.setCategoria(eventoCategoriaRepository.findOne(MISC));
+            asignaCategoria.setEvento(evento);
+            asignaCategorias.add(asignaCategoria);
+        }
+
+        return asignaCategorias;
     }
 }
