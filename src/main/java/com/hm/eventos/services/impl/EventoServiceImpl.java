@@ -133,6 +133,7 @@ public class EventoServiceImpl implements EventoService {
         evento.setFechaInicio(event.getStartTime());
         evento.setFechaFin(event.getEndTime());
         evento.setVisibilidad(PUBLICO);
+        evento.setListaInvitados(new ArrayList<ListaInvitado>());
         evento.setpNombre("" + event.getPlace().getName());
         evento.setpDireccion("" + event.getPlace().getLocation().getStreet() + ", " + event.getPlace().getLocation().getCity());
         evento.setpLat(event.getPlace().getLocation().getLatitude());

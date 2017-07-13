@@ -32,10 +32,10 @@ public class SaveEventsFromFacebook {
     private FacebookTemplate facebookTemplate = new FacebookTemplate(TOKEN);
     private Facebook facebook = getFacebook();
 
-    @Scheduled(cron = "0 0 4 * * *")
+    @Scheduled(cron = "0 10 23 * * *")
     public void saveEventsFromFacebook() {
         System.out.println(LocalDateTime.now());
-        PagedList<Event> events = getListOfEventsByCountry(getEventsFromFracebook(DEFAULT_COUNTRY, null), DEFAULT_COUNTRY);
+        PagedList<Event> events = getListOfEventsByCountry(getEventsFromFracebook("*", null), DEFAULT_COUNTRY);
         if(events != null) {
             System.out.println("Guardando " + events.size() + "eventos");
             events.forEach(event -> eventoService.saveEventoFromFacebook(event));
