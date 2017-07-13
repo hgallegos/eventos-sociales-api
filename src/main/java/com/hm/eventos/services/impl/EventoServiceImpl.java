@@ -87,7 +87,7 @@ public class EventoServiceImpl implements EventoService {
             }
             List<EventoFoto> fotos = new ArrayList<>();
             EventoFoto eventoFoto = eventoFotoFromEvent(event, evento);
-            if(eventoFoto != null) {
+            if(eventoFoto != null && eventoFoto.getUrl().startsWith("https")) {
                 fotos.add(eventoFotoRepository.save(eventoFotoFromEvent(event, evento)));
                 evento.setEventoFotos(fotos);
             }

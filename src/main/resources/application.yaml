@@ -37,5 +37,8 @@ auth0:
   audience: eventos-sociales-api
   issuer: https://hgallegos.auth0.com/
   secret: WER0cTA1MWM5R3p3TGVLNUNLQ3U1OWpxTWtvVWVFUHJ2TnAwMFI2blRMMEt0ODNnUVZYN3ptTC0yVmEyWmpvbg==
+debug: true
+logging:
+  file: explorecity.log
 
 
