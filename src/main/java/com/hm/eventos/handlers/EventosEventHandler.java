@@ -39,7 +39,7 @@ public class EventosEventHandler {
     }
 
     @HandleBeforeSave
-    public void handleEventoSave(Evento evento, HttpServletRequest request) {
+    public void handleEventoSave(Evento evento) {
         actividad = new Actividad();
         actividad.setApiId(1);
         if(evento.getId() > 0) {

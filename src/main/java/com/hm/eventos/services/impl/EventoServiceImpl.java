@@ -84,6 +84,10 @@ public class EventoServiceImpl implements EventoService {
             Evento evento = eventoRepository.save(facebookEventToEvento(event));
             if (event.getCover() == null) {
                 event = facebook.fetchObject(event.getId(), Event.class, ALL_FIELDS);
+                if(event.getCover() == null || !event.getCover().getSource().startsWith("https")) {
+                    eventoRepository.delete(evento);
+                    return null;
+                }
             }
             List<EventoFoto> fotos = new ArrayList<>();
             EventoFoto eventoFoto = eventoFotoFromEvent(event, evento);
