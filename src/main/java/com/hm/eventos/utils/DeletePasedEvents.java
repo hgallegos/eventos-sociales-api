@@ -20,7 +20,7 @@ public class DeletePasedEvents {
     @Autowired
     EventoService eventoService;
 
-    @Scheduled(cron = "0 0 22 * * *")
+    @Scheduled(cron = "0 30 13 * * *")
     public void eliminaEventosPasados() {
         eventoService.getAll().stream()
                 .filter(e -> e.getFechaFin().getTime() <= Date.from(LocalDateTime.now().toInstant(ZoneOffset.UTC)).getTime())

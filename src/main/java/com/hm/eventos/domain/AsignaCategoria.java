@@ -1,5 +1,8 @@
 package com.hm.eventos.domain;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 
 /**
@@ -26,6 +29,7 @@ public class AsignaCategoria {
 
     @ManyToOne
     @JoinColumn(name = "Id_Evento", referencedColumnName = "Id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     public Evento getEvento() {
         return evento;
     }
@@ -36,6 +40,7 @@ public class AsignaCategoria {
 
     @ManyToOne
     @JoinColumn(name = "Id_Categoria", referencedColumnName = "Id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     public EventoCategoria getCategoria() {
         return categoria;
     }
