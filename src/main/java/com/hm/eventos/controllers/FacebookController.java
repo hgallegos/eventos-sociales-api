@@ -1,5 +1,8 @@
 package com.hm.eventos.controllers;
 
+import com.hm.eventos.domain.Actividad;
+import com.hm.eventos.repositories.UsuarioRepository;
+import com.hm.eventos.services.ActividadService;
 import com.hm.eventos.services.EventoService;
 import com.hm.eventos.utils.SaveEventsFromFacebook;
 import org.slf4j.Logger;
@@ -31,8 +34,16 @@ public class FacebookController {
     @Autowired
     private EventoService eventoService;
 
+    @Autowired
+    private ActividadService actividadService;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
     public static final String TOKEN = "EAARbj8vHJP0BAE0OfRSz9ZCXcn9XgsliksOYbigBN0ZBBQ3uJUeQ1Ed1z4jneZB65nnx26tWIZAZA1rbldKMlmZBZB7xzuemrBRHJsc7c6nQVMJG50VBZBTp0du0ZB6zn8kS9j0sVoUByZAcXuTaEEaZAXrwDqcsCDfUGNbc2bWFI7iTgZDZD";
     private static final String DEFAULT_COUNTRY = "chile";
+    private static final int FACEBOOK_USER = 103;
+
 
     private String query = "chile";
 
@@ -53,11 +64,23 @@ public class FacebookController {
         PagedList<Event> events = getListOfEventsByCountry(getEventsFromFracebook(query, null), DEFAULT_COUNTRY);
         if (events != null) {
             log.info("Guardando " + events.size() + " eventos");
+            int cont = 0;
+            Actividad actividadNewEvento = new Actividad();
+            actividadNewEvento.setApiId(1);
+            actividadNewEvento.setFecha(Date.from(LocalDateTime.now().toInstant(ZoneOffset.UTC)));
+            actividadNewEvento.setTipo("crear_evento");
+            actividadNewEvento.setIp("www.facebook.com");
+            actividadNewEvento.setUsuario(usuarioRepository.findOne(FACEBOOK_USER));
             for (Event event :
                     events) {
-                eventoService.saveEventoFromFacebook(event);
+                if (eventoService.saveEventoFromFacebook(event) != null) {
+                    cont++;
+                    actividadService.saveActividad(actividadNewEvento);
+                }
+
+
             }
-            log.info("Eventos guardados");
+            log.info("Se guardaron " + cont + " eventos");
             saveNextEvents(events);
         }
     }
@@ -67,8 +90,25 @@ public class FacebookController {
             PagedList<Event> nextEvents = getListOfEventsByCountry(getEventsFromFracebook(query, events.getNextPage()), DEFAULT_COUNTRY);
             if (nextEvents != null) {
                 log.info("Guardando " + nextEvents.size() + " eventos");
-                nextEvents.forEach(event -> eventoService.saveEventoFromFacebook(event));
-                log.info("Eventos guardados");
+
+                final int[] cont = {0};
+                Actividad actividadNewEvento = new Actividad();
+                actividadNewEvento.setApiId(1);
+                actividadNewEvento.setFecha(Date.from(LocalDateTime.now().toInstant(ZoneOffset.UTC)));
+                actividadNewEvento.setTipo("crear_evento");
+                actividadNewEvento.setIp("www.facebook.com");
+                actividadNewEvento.setUsuario(usuarioRepository.findOne(FACEBOOK_USER));
+
+                nextEvents.forEach(event -> {
+                    if (eventoService.saveEventoFromFacebook(event) != null) {
+                        cont[0]++;
+                        actividadService.saveActividad(actividadNewEvento);
+                    }
+
+                });
+                log.info("Se guardaron " + cont[0] + " eventos");
+
+
                 this.saveNextEvents(nextEvents);
             } else {
                 this.query = changeQuery();

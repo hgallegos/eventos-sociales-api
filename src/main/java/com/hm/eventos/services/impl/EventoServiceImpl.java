@@ -6,9 +6,12 @@ import com.hm.eventos.repositories.EventoFotoRepository;
 import com.hm.eventos.repositories.EventoRepository;
 import com.hm.eventos.repositories.UsuarioRepository;
 import com.hm.eventos.services.EventoService;
+import com.hm.eventos.utils.SaveEventsFromFacebook;
 import com.javadocmd.simplelatlng.LatLng;
 import com.javadocmd.simplelatlng.LatLngTool;
 import com.javadocmd.simplelatlng.util.LengthUnit;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.social.facebook.api.Event;
@@ -28,6 +31,8 @@ import static com.hm.eventos.controllers.FacebookController.TOKEN;
  */
 @Service
 public class EventoServiceImpl implements EventoService {
+
+    private static final Logger log = LoggerFactory.getLogger(EventoServiceImpl.class);
 
     private static final String PUBLICO = "PUBLICO";
     private static final String FACEBOOK_TYPE = "from Facebook";
