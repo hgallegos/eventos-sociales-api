@@ -43,6 +43,7 @@ public class EventoServiceImpl implements EventoService {
     private static final int VIDA_NOCTURNA = 6;
     private static final int MISC = 2;
     private static final int FAMILIAR = 10;
+    private static final int DEPORTE = 11;
 
     @Autowired
     EventoRepository eventoRepository;
@@ -204,6 +205,12 @@ public class EventoServiceImpl implements EventoService {
         }
         if (description.contains("pub") || description.contains("Pub") || description.contains("Noche") || description.contains("noche") || description.contains("octurna")) {
             asignaCategoria.setCategoria(eventoCategoriaRepository.findOne(VIDA_NOCTURNA));
+            asignaCategoria.setEvento(evento);
+            asignaCategorias.add(asignaCategoria);
+            oneAtLeast = true;
+        }
+        if (description.contains("eporte") || description.contains("orneo") || description.contains("artido")) {
+            asignaCategoria.setCategoria(eventoCategoriaRepository.findOne(DEPORTE));
             asignaCategoria.setEvento(evento);
             asignaCategorias.add(asignaCategoria);
             oneAtLeast = true;
