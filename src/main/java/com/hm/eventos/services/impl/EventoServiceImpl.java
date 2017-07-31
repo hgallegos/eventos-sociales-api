@@ -184,7 +184,7 @@ public class EventoServiceImpl implements EventoService {
         Set<AsignaCategoria> asignaCategorias = new HashSet<>();
         AsignaCategoria asignaCategoria = new AsignaCategoria();
         boolean oneAtLeast = false;
-        if (description.contains("usica") || description.contains("úsica") || description.contains("oncierto")) {
+        if (description.contains("usica") || description.contains("úsica") || description.contains("oncierto") || description.contains("disco")) {
             asignaCategoria.setCategoria(eventoCategoriaRepository.findOne(MUSICA));
             asignaCategoria.setEvento(evento);
             asignaCategorias.add(asignaCategoria);
