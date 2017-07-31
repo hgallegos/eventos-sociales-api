@@ -69,7 +69,7 @@ public class FacebookController {
             actividadNewEvento.setApiId(1);
             actividadNewEvento.setFecha(Date.from(LocalDateTime.now().toInstant(ZoneOffset.UTC)));
             actividadNewEvento.setTipo("crear_evento");
-            actividadNewEvento.setIp("www.facebook.com");
+            actividadNewEvento.setIp("66.220.144.0");
             actividadNewEvento.setUsuario(usuarioRepository.findOne(FACEBOOK_USER));
             for (Event event :
                     events) {
