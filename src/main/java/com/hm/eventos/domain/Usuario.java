@@ -16,11 +16,13 @@ import java.util.Set;
 public class Usuario {
     private int id;
     private String usuario;
+    private String nombre;
     private String contrasena;
     private int edad;
     private String email;
     private String token;
     private String nivel;
+    private int estado;
     private Collection<Evento> eventos;
     private Collection<Actividad> actividades;
 
@@ -109,5 +111,23 @@ public class Usuario {
 
     public void setActividades(Collection<Actividad> actividades) {
         this.actividades = actividades;
+    }
+
+    @Column(name = "Nombre")
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    @Column(name = "Estado")
+    public int getEstado() {
+        return estado;
+    }
+
+    public void setEstado(int estado) {
+        this.estado = estado;
     }
 }

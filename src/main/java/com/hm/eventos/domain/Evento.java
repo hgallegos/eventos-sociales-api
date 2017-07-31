@@ -154,7 +154,7 @@ public class Evento {
         this.pTipo = pTipo;
     }
 
-    @OneToMany(orphanRemoval = true, cascade = {CascadeType.REMOVE}, fetch = FetchType.EAGER, mappedBy = "evento")
+    @OneToMany(orphanRemoval = true, cascade = {CascadeType.REMOVE}, fetch = FetchType.LAZY, mappedBy = "evento")
     public Collection<EventoFoto> getEventoFotos() {
         return eventoFotos;
     }
@@ -163,7 +163,7 @@ public class Evento {
         this.eventoFotos = eventoFotos;
     }
 
-    @OneToMany(orphanRemoval = true, cascade = {CascadeType.REMOVE}, fetch = FetchType.LAZY, mappedBy = "evento")
+    @OneToMany(mappedBy = "evento", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     public Set<AsignaCategoria> getAsignaCategorias() {
         return asignaCategorias;
     }

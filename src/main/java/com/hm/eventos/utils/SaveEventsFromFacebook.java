@@ -129,7 +129,7 @@ public class SaveEventsFromFacebook {
                     .filter(e -> e.getPlace().getLocation().getStreet() != null)
                     .filter(e -> e.getPlace().getLocation().getCountry() != null)
                     .filter(e -> e.getPlace().getLocation().getCountry().equalsIgnoreCase(DEFAULT_COUNTRY))
-                    .filter(e -> (e.getEndTime().getTime() >= Date.from(LocalDateTime.now().toInstant(ZoneOffset.UTC)).getTime()))
+                    .filter(e -> (e.getEndTime().getTime() > Date.from(LocalDateTime.now().toInstant(ZoneOffset.UTC)).getTime()))
                     .collect(Collectors.toList());
             return new PagedList<>(eventList, events.getPreviousPage(), events.getNextPage());
         } else {

@@ -17,7 +17,7 @@ public class AsignaCategoria {
     private EventoCategoria categoria;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
     public int getId() {
         return id;
